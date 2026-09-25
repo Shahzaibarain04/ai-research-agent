@@ -1,15 +1,13 @@
-from crewai import Agent, Task, Crew
-from langchain_openai import ChatOpenAI
+from crewai import Agent, Task, Crew, LLM
 from search_tool import duckduckgo_search_tool
 
 def run_research_crew(topic: str, groq_api_key: str) -> str:
-    """Configures and runs the CrewAI research agent using Groq via LangChain OpenAI adapter."""
+    """Configures and runs the CrewAI research agent using native CrewAI LLM pointing to Groq."""
     
-    # Direct OpenAI client configuration pointing to Groq's base URL (bypasses litellm)
-    llm = ChatOpenAI(
-        model_name="openai/gpt-oss-120b",
-        openai_api_key=groq_api_key,
-        openai_api_base="https://api.groq.com/openai/v1",
+    # Native CrewAI LLM configured for Groq
+    llm = LLM(
+        model="groq/openai/gpt-oss-120b",
+        api_key=groq_api_key,
         temperature=0.3
     )
 
